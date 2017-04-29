@@ -19,7 +19,7 @@ defmodule Fluff.Mixfile do
   def application do
     [mod: {Fluff, []},
      applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex]]
+                    :phoenix_ecto, :postgrex, :redix, :redix_pubsub]]
   end
 
   # Specifies which paths to compile per environment.
@@ -38,7 +38,9 @@ defmodule Fluff.Mixfile do
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:gettext, "~> 0.11"},
      {:cowboy, "~> 1.0"},
-     {:phoenix_pubsub_redis, "~> 2.1.0"}]
+     {:phoenix_pubsub_redis, "~> 2.1.0"},
+     {:poison, "~> 2.0"},
+     {:redix, ">= 0.0.0"}, {:redix_pubsub, ">= 0.0.0"}]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.

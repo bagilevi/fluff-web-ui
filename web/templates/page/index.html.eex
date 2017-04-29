@@ -1,2 +1,18 @@
-<div id="events">
-</div>
+<header id="status-pane">
+  status
+</header>
+<main id="failures-container">
+  <div id="failures-pane">
+    failures pane
+  </div>
+  <div id="details-container">
+    <div id="details-pane">
+      details pane
+    </div>
+    <div id="code-pane">
+      code pane
+      <div id="events">
+      </div>
+    </div>
+  </div>
+</main>

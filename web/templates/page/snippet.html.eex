@@ -1,0 +1,3 @@
+<div style="background: #543; border: solid 1px white">
+  <%= Fluff.Shout.brief @shout %>
+</div>
