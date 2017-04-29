@@ -14,8 +14,12 @@ config :fluff, Fluff.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "yo4rqe7eF3zZKWEpy/WYao8JyuhhGnOcoJfP4daCPyU3bbwPF4aZREpbSpqgdaQY",
   render_errors: [view: Fluff.ErrorView, accepts: ~w(html json)],
+  # pubsub: [name: Fluff.PubSub,
+  #          adapter: Phoenix.PubSub.PG2]
   pubsub: [name: Fluff.PubSub,
-           adapter: Phoenix.PubSub.PG2]
+           adapter: Phoenix.PubSub.Redis,
+           node_name: System.get_env("NODE") || "main"]
+
 
 # Configures Elixir's Logger
 config :logger, :console,

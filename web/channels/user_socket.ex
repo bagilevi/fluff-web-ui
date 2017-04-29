@@ -2,7 +2,7 @@ defmodule Fluff.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  # channel "room:*", Fluff.RoomChannel
+  channel "project:*", Fluff.ProjectChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket
