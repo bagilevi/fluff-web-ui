@@ -59,6 +59,9 @@ let channel = socket.channel("project:1", {})
 let failureContainer = document.querySelector("#failures-pane")
 let detailsContainer = document.querySelector("#details-pane")
 
+channel.on("stats", payload => {
+  $('#status-pane').html(payload.html);
+})
 channel.on("new_failure", payload => {
   let id = Math.floor(Math.random() * Math.pow(10, 20));
   let $snippet = $(payload.snippet_html);

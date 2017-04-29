@@ -14,6 +14,7 @@ defmodule Fluff do
       supervisor(Fluff.Endpoint, []),
       # Start your own worker by calling: Fluff.Worker.start_link(arg1, arg2, arg3)
       worker(Fluff.ShoutReceiver, []),
+      worker(Fluff.RunStats, []),
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
