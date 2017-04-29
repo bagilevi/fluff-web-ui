@@ -1,0 +1,8 @@
+<div class="failure-snippet">
+  <div class="file-ref">
+    <span class="file-path"><span><%= @shout.file_path %></span><span class="file-line-sep">:</span><span class="line-number"><%= @shout.line_number %></span></span>
+  </div>
+  <div class="description"><%= @shout.full_description %></div>
+  <div class="exception-class"><%= @shout.exception["class"] %></div>
+  <div class="exception-message"><%= @shout.exception["message"] %></div>
+</div>

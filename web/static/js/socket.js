@@ -57,12 +57,20 @@ socket.connect()
 // Now that you are connected, you can join channels with a topic:
 let channel = socket.channel("project:1", {})
 let failureContainer = document.querySelector("#failures-pane")
-
+let detailsContainer = document.querySelector("#details-pane")
 
 channel.on("new_failure", payload => {
-  let el = document.createElement("div");
-  el.innerHTML = payload.html;
-  failureContainer.appendChild(el);
+  let id = Math.floor(Math.random() * Math.pow(10, 20));
+  let $snippet = $(payload.snippet_html);
+  let $details = $(payload.html).hide();
+  $("#failures-pane").append($snippet);
+  $("#details-pane").append($details);
+  $snippet.data('failure-id', "" + id);
+  $details.attr('id', "failure-" + id);
+  if ($('.failure-snippet.current').length == 0) {
+    $snippet.addClass('current');
+    $details.show();
+  }
 })
 
 channel.join()

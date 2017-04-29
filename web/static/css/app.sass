@@ -1,37 +1,109 @@
 
+$font: 'Roboto', sans-serif
+$sourceFont: 'Roboto Mono', monospace
 body
   margin: 0
   padding: 0
   background: #999
+  height: 100vh
   width: 100vw
   display: flex
   flex-direction: column
   color: white
 
+body, th, td
+  font-family: $font
+
 #status-pane
-  background: #234
+  background: #171717
   padding: 1em
 
 #failures-container
   background: #444
   display: flex
-  height: 100vh
+  flex-grow: 1
   flex-direction: row
 
 #failures-pane
-  background: #345
+  background: #292929
   width: 20vw
 
 #details-container
   background: #333
   width: 80vw
   display: flex
-  height: 100vh
   flex-direction: row
 
 #details-pane
-  background: #456
-  width: 50%
+  background: #333
+  width: 100%
+  display: flex
+  flex-direction: column
+  overflow: auto
 #code-pane
-  background: #567
+  display: none
+  background: #2c2c2c
   width: 50%
+
+.failure-snippet, .failure-details
+  .file-ref
+    opacity: 0.5
+  .description
+    font-size: 120%
+  .exception-message
+    font-size: 120%
+  .exception-class
+    font-family: $sourceFont
+
+
+.failure-snippet
+  font-size: 80%
+  background: #900
+  opacity: 0.5
+  // border: solid 1px #F99
+  margin: 0.25em
+  padding: 0.5em
+  border-radius: 0.25em
+  cursor: pointer
+  >*
+    overflow: hidden
+  .file-ref
+    display: flex
+    flex-direction: row-reverse
+  .description
+    display: none
+  .exception-class
+    display: none
+    margin-top: 0.25em
+  .exception-message
+  &.current
+    opacity: 1
+
+.failure-details
+  flex: 1
+  // border: solid 0.25em #900
+  border-radius: 0.25em
+  padding: 1em
+  >*
+    margin-bottom: 0.5em
+  .exception-container
+    background: #900
+    border-radius: 0.25em
+    >*
+      padding-left: 0.5em
+      padding-right: 0.5em
+    .exception-class
+      padding-top: 0.25em
+    .exception-message
+      padding-bottom: 0.25em
+    .exception-backtrace
+      background: #222
+      color: #CCC
+      font-family: $sourceFont
+      font-size: 12px
+      padding: 0.5em
+      border-bottom-left-radius: 0.25em
+      border-bottom-right-radius: 0.25em
+      .backtrace-item
+        &:hover
+          color: white

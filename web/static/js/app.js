@@ -19,3 +19,12 @@ import "phoenix_html"
 // paths "./socket" or full ones "web/static/js/socket".
 
 import socket from "./socket"
+
+$(function(){
+  $('#failures-container').on('click', '.failure-snippet', function(){
+    $('.failure-details').hide();
+    $('#failure-' + $(this).data('failure-id')).show();
+    $('.failure-snippet').removeClass('current')
+    $(this).addClass('current')
+  });
+});

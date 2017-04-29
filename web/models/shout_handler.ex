@@ -3,11 +3,11 @@ defmodule Fluff.ShoutHandler do
     shout = Fluff.Shout.parse(payload)
 
     IO.inspect shout
-    html = Phoenix.View.render_to_string(Fluff.PageView, "snippet.html", shout: shout)
 
     if shout.status == "failed" do
       Fluff.Endpoint.broadcast!("project:1", "new_failure", %{
-        html: html
+        snippet_html: Phoenix.View.render_to_string(Fluff.ShoutView, "failure_snippet.html", shout: shout),
+        html: Phoenix.View.render_to_string(Fluff.ShoutView, "failure_details.html", shout: shout)
       })
     end
   end
