@@ -18,6 +18,14 @@ defmodule Fluff.RunStats do
     new_data
   end
 
+  def set(id, key, value) do
+    data = get(id) || %{}
+    new_data = Map.put(data, key, value)
+    put(id, new_data)
+    new_data
+  end
+
+
   def put(id, data) do
     Agent.update(__MODULE__, &Map.put(&1, id, data))
   end

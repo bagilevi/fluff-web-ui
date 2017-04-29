@@ -56,9 +56,12 @@ socket.connect()
 
 // Now that you are connected, you can join channels with a topic:
 let channel = socket.channel("project:1", {})
-let failureContainer = document.querySelector("#failures-pane")
-let detailsContainer = document.querySelector("#details-pane")
 
+channel.on("started", payload => {
+  $('#status-pane').html("");
+  $('#failures-pane').html("");
+  $('#details-pane').html("");
+})
 channel.on("stats", payload => {
   $('#status-pane').html(payload.html);
 })

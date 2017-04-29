@@ -111,7 +111,6 @@ body, th, td
 .run-stats
   >*
     display: inline-block
-    background: #335
     padding: 0 0.5em
     border-radius: 0.25em
   .passed
@@ -120,3 +119,13 @@ body, th, td
     background: #900
   .pending
     background: #880
+  .run-status
+    text-transform: uppercase
+    opacity: 0.8
+    padding-left: 0
+    &.running
+      img
+        position: relative
+        top: -0.15em
+        width: 1.5em
+        height: 1.5em
