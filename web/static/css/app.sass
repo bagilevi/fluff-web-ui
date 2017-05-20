@@ -17,6 +17,7 @@ body, th, td
 #status-pane
   background: #171717
   padding: 1em
+  height: 3.5em
 
 #failures-container
   background: #444
@@ -148,9 +149,9 @@ body, th, td
   .pending
     background: #880
   .run-status
-    text-transform: uppercase
     opacity: 0.8
     padding-left: 0
+    margin-left: 1em
     &.running
       img
         position: relative
@@ -170,3 +171,12 @@ body, th, td
   .CodeMirror-linenumber
     color: #999 !important
     background: #411
+
+.pass-mark
+  font-size: 32px
+  text-align: center
+  margin: 1rem
+  opacity: 0.7
+  background: green
+  padding: 1rem
+  border-radius: 0.5rem

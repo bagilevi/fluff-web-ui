@@ -1,10 +1,10 @@
 <div class="run-stats">
-  <div class="run-status <%= if @stats[:finished] do %>finished<% else %>running<% end %>">
-    <%= if @stats[:finished] do %>✓<% else %><img src="/images/spin.gif" alt="Running" /><% end %>
-  </div>
   <%= for key <- [:passed, :failed, :pending] do %>
     <%= if @stats[key] do %>
       <span class="<%= key %>"><span class="num"><%= @stats[key] %></span> <%= key %></span>
     <% end %>
   <% end %>
+  <div class="run-status <%= if @stats[:finished] do %>finished<% else %>running<% end %>">
+    <%= if @stats[:finished] do %>Finished.<% else %><img src="/images/spin.gif" alt="Running" /><% end %>
+  </div>
 </div>

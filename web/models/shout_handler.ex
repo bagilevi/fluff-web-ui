@@ -28,7 +28,7 @@ defmodule Fluff.ShoutHandler do
           Fluff.Endpoint.broadcast!("project:1", "finished", %{})
 
           stats = Fluff.RunStats.set(shout.run_uuid, :finished, true)
-          push_stats(stats)
+          push_stats(stats, :finished)
         end
 
       _ -> :ok
@@ -64,8 +64,10 @@ defmodule Fluff.ShoutHandler do
     push_stats(stats)
   end
 
-  def push_stats(stats) do
+  def push_stats(stats, status \\ nil) do
     Fluff.Endpoint.broadcast!("project:1", "stats", %{
+      finished: status == :finished,
+      success: ((stats[:passed] || 0) > 1 && (stats[:failed] || 0) == 0),
       html: render("stats.html", stats: stats)
     })
   end

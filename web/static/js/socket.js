@@ -64,6 +64,9 @@ channel.on("started", payload => {
 })
 channel.on("stats", payload => {
   $('#status-pane').html(payload.html);
+  if (payload.finished && payload.success) {
+    $("#failures-pane").append("<div class=\"pass-mark\">Passed</div>");
+  }
 })
 channel.on("new_failure", payload => {
   let id = Math.floor(Math.random() * Math.pow(10, 20));
