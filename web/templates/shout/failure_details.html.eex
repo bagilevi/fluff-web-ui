@@ -6,6 +6,7 @@
   <div class="exception-container">
     <div class="exception-class"><%= @failure.exception.class %></div>
     <div class="exception-message"><%= @failure.exception.message %></div>
+    <%= render "code_snippet.html", code_snippet: @code_snippet %>
     <div class="exception-backtrace">
       <%= for item <- @failure.exception.backtrace do %>
         <div class="backtrace-item <%= if item.is_project, do: "project", else: "lib" %>">

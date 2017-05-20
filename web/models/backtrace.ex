@@ -15,6 +15,7 @@ defmodule Fluff.Backtrace do
     def build(line, env) do
       [path, after_path] = String.split(line, ":", parts: 2)
       [line, note] = String.split(after_path, [":", ";", ",", " "], parts: 2)
+      line = String.to_integer(line)
 
       if String.starts_with?(path, env.project_path) do
         %Item{

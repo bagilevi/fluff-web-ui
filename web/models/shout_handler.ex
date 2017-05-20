@@ -2,6 +2,7 @@ defmodule Fluff.ShoutHandler do
   alias Fluff.Run
   alias Fluff.RunTracker
   alias Fluff.Failure
+  alias Fluff.CodeSnippet
 
   def handle(payload) do
     shout = Fluff.Shout.parse(payload)
@@ -32,9 +33,11 @@ defmodule Fluff.ShoutHandler do
             run = RunTracker.load(shout.run_uuid)
             failure = Failure.build(shout, run)
 
+            code_snippet = CodeSnippet.build(failure, run)
+
             Fluff.Endpoint.broadcast!("project:1", "new_failure", %{
               snippet_html: render("failure_snippet.html", failure: failure),
-              html:         render("failure_details.html", failure: failure)
+              html:         render("failure_details.html", failure: failure, code_snippet: code_snippet),
             })
 
           "pending" ->
