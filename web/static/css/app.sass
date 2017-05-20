@@ -98,15 +98,23 @@ body, th, td
       padding-bottom: 0.25em
     .exception-backtrace
       background: #222
-      color: #CCC
+      color: #DDD
       font-family: $sourceFont
       font-size: 12px
       padding: 0.5em
       border-bottom-left-radius: 0.25em
       border-bottom-right-radius: 0.25em
       .backtrace-item
+        > span
+          display: inline !important
         &:hover
-          color: white
+          background: #111
+        &.lib
+          opacity: 0.5
+        .container_name
+          color: #789
+        .note
+          color: #CC8
 
 .run-stats
   >*
