@@ -6,6 +6,9 @@
   </div>
   <div id="details-container">
     <div id="details-pane">
+      <div class="bg-logo">
+        Fluff
+      </div>
     </div>
     <div id="code-pane">
       <div id="events">
