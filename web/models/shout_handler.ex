@@ -7,9 +7,6 @@ defmodule Fluff.ShoutHandler do
   def handle(payload) do
     shout = Fluff.Shout.parse(payload)
 
-
-    # IO.inspect shout
-
     case shout.type do
       "start_run" ->
         Fluff.Endpoint.broadcast!("project:1", "started", %{})
@@ -22,36 +19,41 @@ defmodule Fluff.ShoutHandler do
         RunTracker.save_run(run)
 
       "example_result" ->
-
-        case shout.status do
-          "passed" ->
-            increment_counter(:passed, shout)
-
-          "failed" ->
-            increment_counter(:failed, shout)
-
-            run = RunTracker.load(shout.run_uuid)
-            failure = Failure.build(shout, run)
-
-            code_snippet = CodeSnippet.build(failure, run)
-
-            Fluff.Endpoint.broadcast!("project:1", "new_failure", %{
-              snippet_html: render("failure_snippet.html", failure: failure),
-              html:         render("failure_details.html", failure: failure, code_snippet: code_snippet),
-            })
-
-          "pending" ->
-            increment_counter(:pending, shout)
-
-          _ -> :ok
-
+        if run = RunTracker.load(shout.run_uuid) do
+          handle_example_result(shout, run)
         end
 
       "end_run" ->
-        Fluff.Endpoint.broadcast!("project:1", "finished", %{})
+        if run = RunTracker.load(shout.run_uuid) do
+          Fluff.Endpoint.broadcast!("project:1", "finished", %{})
 
-        stats = Fluff.RunStats.set(shout.run_uuid, :finished, true)
-        push_stats(stats)
+          stats = Fluff.RunStats.set(shout.run_uuid, :finished, true)
+          push_stats(stats)
+        end
+
+      _ -> :ok
+    end
+  end
+
+  defp handle_example_result(shout, run) do
+    case shout.status do
+      "passed" ->
+        increment_counter(:passed, shout)
+
+      "failed" ->
+        increment_counter(:failed, shout)
+
+        failure = Failure.build(shout, run)
+
+        code_snippet = CodeSnippet.build(failure, run)
+
+        Fluff.Endpoint.broadcast!("project:1", "new_failure", %{
+          snippet_html: render("failure_snippet.html", failure: failure),
+          html:         render("failure_details.html", failure: failure, code_snippet: code_snippet),
+        })
+
+      "pending" ->
+        increment_counter(:pending, shout)
 
       _ -> :ok
     end

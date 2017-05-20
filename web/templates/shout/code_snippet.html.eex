@@ -1,7 +1,11 @@
 <div class="code-snippet">
-  <textarea id="code1"
-    data-starting-line=<%= @code_snippet.starting_line %>
-    data-failing-line=<%= @code_snippet.failing_line %>
-  >
+  <%= if @code_snippet do %>
+    <textarea id="code1"
+      data-starting-line=<%= @code_snippet.starting_line %>
+      data-failing-line=<%= @code_snippet.failing_line %>
+    >
 <%= @code_snippet.lines |> Enum.join("\n") %></textarea>
+  <% else %>
+    ERROR: code snippet does not exist
+  <% end %>
 </div>

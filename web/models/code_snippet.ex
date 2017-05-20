@@ -16,7 +16,13 @@ defmodule Fluff.CodeSnippet do
     end)
 
     if backtrace_item do
-      case file_result = File.read(backtrace_item.path) do
+      full_path =
+        if String.starts_with?(backtrace_item.path, "/") do
+          backtrace_item.path
+        else
+          "#{run.project_path}/#{backtrace_item.path}"
+        end
+      case file_result = File.read(full_path) do
         {:ok, content} ->
           lines = String.split(content, ["\r\n", "\n", "\r"])
           number = backtrace_item.line

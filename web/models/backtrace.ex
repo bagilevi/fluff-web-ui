@@ -17,13 +17,21 @@ defmodule Fluff.Backtrace do
       [line, note] = String.split(after_path, [":", ";", ",", " "], parts: 2)
       line = String.to_integer(line)
 
-      if String.starts_with?(path, env.project_path) do
+      if String.starts_with?(path, env.project_path) || !String.starts_with?(path, "/") do
         %Item{
           path: path,
           line: line,
           note: note,
           outer_path: env.project_path,
-          inner_path: String.slice(path, String.length(env.project_path)+1 .. -1),
+          inner_path:
+            cond do
+              String.starts_with?(path, env.project_path) ->
+                String.slice(path, String.length(env.project_path)+1 .. -1)
+              String.starts_with?(path, "./") ->
+                String.slice(path, 2 .. -1)
+              true ->
+                path
+            end,
           is_project: true,
           container_name: String.split(env.project_path, "/") |> List.last
         }
