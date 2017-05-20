@@ -2,7 +2,7 @@ defmodule Fluff.CodeSnippet do
   alias Fluff.CodeSnippet
   alias Fluff.CodeSnippet.Line
 
-  defstruct [:lines]
+  defstruct [:lines, :starting_line, :failing_line]
 
   defmodule Line do
     alias Fluff.CodeSnippet.Line
@@ -20,15 +20,12 @@ defmodule Fluff.CodeSnippet do
         {:ok, content} ->
           lines = String.split(content, ["\r\n", "\n", "\r"])
           number = backtrace_item.line
+          starting_line = max(number - 100, 1)
+          finishing_line = min(number + 100, Enum.count(lines))
           %CodeSnippet{
-            lines:
-              (number - 15 .. number + 15) |> Enum.map(fn iter_number ->
-                %Line{
-                  number: iter_number,
-                  highlight: (iter_number == number),
-                  content: lines |> Enum.at(iter_number - 1)
-                }
-              end)
+            starting_line: starting_line,
+            failing_line: number,
+            lines: Enum.slice(lines, starting_line - 1 .. finishing_line - 1)
           }
         _ ->
           require Logger

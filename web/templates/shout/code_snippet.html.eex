@@ -1,7 +1,7 @@
 <div class="code-snippet">
-  <%= for line <- @code_snippet.lines do %>
-    <div class="line <%= if line.highlight, do: "highlight" %>"><span
-      class="number"><%= line.number %></span><span
-      class="content"><%= line.content %></span></div>
-  <% end %>
+  <textarea id="code1"
+    data-starting-line=<%= @code_snippet.starting_line %>
+    data-failing-line=<%= @code_snippet.failing_line %>
+  >
+<%= @code_snippet.lines |> Enum.join("\n") %></textarea>
 </div>

@@ -21,5 +21,10 @@
   <body>
     <%= render @view_module, @view_template, assigns %>
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+    <script src="codemirror/codemirror.js"></script>
+    <link rel="stylesheet" href="codemirror/codemirror.css">
+    <link rel="stylesheet" href="codemirror/ambiance.css">
+    <script src="codemirror/ruby.js"></script>
+    <script src="codemirror/active-line.js"></script>
   </body>
 </html>

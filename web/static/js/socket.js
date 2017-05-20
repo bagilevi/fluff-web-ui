@@ -69,13 +69,17 @@ channel.on("new_failure", payload => {
   let id = Math.floor(Math.random() * Math.pow(10, 20));
   let $snippet = $(payload.snippet_html);
   let $details = $(payload.html).hide();
+
   $("#failures-pane").append($snippet);
   $("#details-pane").append($details);
+
+
   $snippet.data('failure-id', "" + id);
   $details.attr('id', "failure-" + id);
   if ($('.failure-snippet.current').length == 0) {
     $snippet.addClass('current');
     $details.show();
+    window.applyCodeMirrorToFailureDetails($details);
   }
 })
 

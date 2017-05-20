@@ -23,8 +23,37 @@ import socket from "./socket"
 $(function(){
   $('#failures-container').on('click', '.failure-snippet', function(){
     $('.failure-details').hide();
-    $('#failure-' + $(this).data('failure-id')).show();
+    let $details = $('#failure-' + $(this).data('failure-id'));
+    $details.show();
+    window.applyCodeMirrorToFailureDetails($details);
     $('.failure-snippet').removeClass('current')
     $(this).addClass('current')
   });
 });
+
+window.applyCodeMirrorToFailureDetails = function($details) {
+  let $textarea = $details.find('textarea');
+  let startingLine = $textarea.data('starting-line') || 1;
+  let failingLine = $textarea.data('failing-line');
+
+  if ($details.data('codemirror') != 'applied') {
+    $details.data('codemirror', 'applied');
+    var cm = CodeMirror.fromTextArea(
+      $textarea.get(0),
+      {
+        mode: "ruby",
+        theme: "ambiance",
+        lineNumbers: true,
+        firstLineNumber: startingLine,
+        readOnly: true,
+        styleActiveLine: true
+      }
+    );
+    let $cm = $details.find('.CodeMirror');
+    $cm.css('height', '38em');
+
+    cm.setCursor(failingLine - startingLine, 1);
+    cm.scrollIntoView({line: failingLine - startingLine + 1, ch: 0});
+    cm.scrollIntoView({line: failingLine - startingLine + 5, ch: 0});
+  }
+}
